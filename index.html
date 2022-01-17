@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function () {
+      $.ajax({
+        url: "./school.json",
+        dataType: "json",
+        success: function (data) {
+          if (data.length > 0) {
+            let tb = $("<table/>");
+
+            for (let i in data) {
+              let $SIGUN_NM = data[i].SIGUN_NM;
+              let $FACLT_NM = data[i].FACLT_NM;
+              let $TELNO = data[i].TELNO;
+              let $REFINE_LOTNO_ADDR = data[i].REFINE_LOTNO_ADDR;
+              let $REFINE_ZIPNO = data[i].REFINE_ZIPNO;
+
+              let row = $("<tr/>").append(
+                $("<td/>").text($SIGUN_NM),
+                $("<td/>").text($FACLT_NM),
+                $("<td/>").text($TELNO),
+                $("<td/>").text($REFINE_LOTNO_ADDR),
+                $("<td/>").text($REFINE_ZIPNO),
+              );
+
+              tb.append(row);
+            }
+            $(".wrap").append(tb);
+          }
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <input type="text" id="myInput" placeholder="Search..">
+  <div class="wrap"></div>
+  <script>
+    $("#myInput").on("keyup", function () {
+      let value = $(this).val();
+      $(".wrap tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  </script>
+</body>
+
+</html>
